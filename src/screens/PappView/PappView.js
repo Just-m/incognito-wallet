@@ -24,10 +24,10 @@ const updateDataToPapp = (data) => {
   if (!sdk) return;
 
   try {
-    const { selectedPrivacy, listSupportedToken } = data;
+    const { selectedPrivacy, listSupportedToken, account } = data;
     const balance = selectedPrivacy?.amount && convertUtil.toHumanAmount(selectedPrivacy?.amount, selectedPrivacy.pDecimals);
-    const paymentAddress = selectedPrivacy?.paymentAddress;
-    const deviceId = DeviceInfo.getUniqueId();
+    const paymentAddress = account?.PaymentAddress;
+	const deviceId = DeviceInfo.getUniqueId();
     paymentAddress && sdk.sendUpdatePaymentAddress(paymentAddress);
     deviceId && sdk.sendUpdateDeviceId(deviceId);
     selectedPrivacy && sdk.sendUpdateTokenInfo({
