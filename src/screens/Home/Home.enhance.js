@@ -135,7 +135,6 @@ const enhance = (WrappedComp) => (props) => {
         }}
       />
       <Modal />
-      <AppUpdater />
     </ErrorBoundary>
   );
 };
