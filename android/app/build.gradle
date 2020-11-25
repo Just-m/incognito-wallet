@@ -163,7 +163,7 @@ android {
     }
     buildTypes {
         release {
-            resValue "string", "CodePushDeploymentKey", '"1IKsmeDfHkZ2uxo3CvcCamuLdUTazow5b3tAu"'
+            resValue "string", "CodePushDeploymentKey", '"12345"'
             resValue 'string', 'app_name', '"Incognito Wallet"'
             minifyEnabled enableProguardInReleaseBuilds
             proguardFiles getDefaultProguardFile("proguard-android.txt"), "proguard-rules.pro"

@@ -71,7 +71,8 @@ export async function loadWallet(passphrase) {
   const accounts = wallet.MasterAccount.child;
   for (const account of accounts) {
     try {
-      await account.loadAccountCached(storage);
+      await account.clearCached();
+      await account.saveAccountCached(storage);
     } catch (e) {
       console.debug('LOAD ACCOUNTS CACHE ERROR', e);
       await account.clearCached();

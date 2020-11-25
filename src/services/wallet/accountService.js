@@ -39,7 +39,7 @@ export const getBalanceNoCache = (
   );
 
   if (Object.keys(account.derivatorToSerialNumberCache).length < 10000) {
-    await account.saveAccountCached(wallet.Storage);
+    // await account.saveAccountCached(wallet.Storage);
   }
 
   return balance;
