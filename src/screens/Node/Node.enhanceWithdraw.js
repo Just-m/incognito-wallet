@@ -8,15 +8,17 @@ import { ExHandler } from '@services/exception';
 import { isEmpty, some } from 'lodash';
 import accountService from '@services/wallet/accountService';
 import { onClickView } from '@utils/ViewUtil';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import {
   actionUpdateWithdrawing as updateWithdrawing,
   updateWithdrawTxs
 } from '@screens/Node/Node.actions';
+import { listAllMasterKeyAccounts } from '@src/redux/selectors/masterKey';
 
 const enhanceWithdraw = WrappedComp => props => {
   const dispatch = useDispatch();
-  const { listDevice, noRewards, wallet, withdrawTxs, withdrawing } = props;
+  const listAccount = useSelector(listAllMasterKeyAccounts);
+  const { listDevice, noRewards, withdrawTxs, withdrawing } = props;
 
 
   const withdrawable = useMemo(() => {
@@ -38,10 +40,9 @@ const enhanceWithdraw = WrappedComp => props => {
   // Support withdraw VNode | PNode unstaked
   const sendWithdrawTx = async (paymentAddress, tokenIds) => {
     const _withdrawTxs = {};
-    const listAccount = await wallet.listAccount();
     for (const tokenId of tokenIds) {
       const account = listAccount.find(item => item.PaymentAddress === paymentAddress);
-      await accountService.createAndSendWithdrawRewardTx(tokenId, account, wallet)
+      await accountService.createAndSendWithdrawRewardTx(tokenId, account, account.Wallet)
         .then((res) => _withdrawTxs[paymentAddress] = res?.txId)
         .catch(() => null);
     }
@@ -111,8 +112,7 @@ const enhanceWithdraw = WrappedComp => props => {
     <ErrorBoundary>
       <WrappedComp
         {...{
-          ...props,
-          wallet,
+          ...props,         
           withdrawing,
           withdrawable,
           noRewards,
